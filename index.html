@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,18 +12,21 @@
             padding: 0;
             background-color: #f4f4f4;
         }
+
         header {
             background-color: #333;
             color: white;
             padding: 1rem 0;
             text-align: center;
         }
+
         .container {
             width: 80%;
             margin: 0 auto;
             overflow: hidden;
             padding: 20px;
         }
+
         .post-form {
             background: #fff;
             padding: 20px;
@@ -30,16 +34,20 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .post-form h2 {
             margin-top: 0;
         }
-        .post-form input, .post-form textarea {
+
+        .post-form input,
+        .post-form textarea {
             width: 100%;
             padding: 10px;
             margin: 5px 0 20px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .post-form button {
             padding: 10px 15px;
             background: #333;
@@ -48,12 +56,15 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         .post-form button:hover {
             background: #555;
         }
+
         .posts {
             margin-bottom: 20px;
         }
+
         .post {
             background: #fff;
             padding: 20px;
@@ -61,14 +72,17 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .post h3 {
             margin-top: 0;
         }
+
         .post p {
-            white-space: pre-wrap; /* Preserva a formatação dos parágrafos */
+            white-space: pre-wrap;
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Blog do Edu</h1>
@@ -87,18 +101,18 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
     <script>
-        // TODO: Replace the following with your app's Firebase project configuration
+        // Substitua com as suas credenciais do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAci64WsUXL2l3QvSVDD_e-fASq7mNFMxs",
             authDomain: "blogdoedu-5851b.firebaseapp.com",
+            databaseURL: "https://blogdoedu-5851b-default-rtdb.firebaseio.com/",
             projectId: "blogdoedu-5851b",
             storageBucket: "blogdoedu-5851b.appspot.com",
             messagingSenderId: "1090451718747",
-            appId: "1:1090451718747:web:71ab4dd926cdc3c349357e",
-            measurementId: "G-PMBFVP7Y4V"
+            appId: "1:1090451718747:web:71ab4dd926cdc3c349357e"
         };
 
-        // Initialize Firebase
+        // Inicializar Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
@@ -117,10 +131,14 @@
                 const updates = {};
                 updates['/posts/' + newPostKey] = postData;
 
-                database.ref().update(updates);
-
-                document.getElementById('title').value = '';
-                document.getElementById('content').value = '';
+                database.ref().update(updates)
+                    .then(() => {
+                        document.getElementById('title').value = '';
+                        document.getElementById('content').value = '';
+                    })
+                    .catch(error => {
+                        console.error("Error adding post: ", error);
+                    });
             } else {
                 alert('Por favor, preencha todos os campos!');
             }
@@ -135,7 +153,7 @@
                     const post = posts[key];
                     const postElement = document.createElement('div');
                     postElement.className = 'post';
-                    
+
                     const postTitle = document.createElement('h3');
                     postTitle.innerText = post.title;
 
@@ -152,4 +170,5 @@
         fetchPosts();
     </script>
 </body>
+
 </html>
